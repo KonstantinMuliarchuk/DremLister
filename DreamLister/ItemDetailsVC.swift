@@ -17,6 +17,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
     @IBOutlet weak var detilField: CustomTextField!
     
     var stores = [MyStore]()
+    var itemToEdit: MyItem?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,10 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         ad.saveContext()
     */
         getStores()
+        
+        if itemToEdit != nil {
+            loadItemData()
+        }
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let store = stores[row]
@@ -69,6 +74,59 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         } catch {
             // handle the error
         }
+    }
+    @IBAction func savePressed(_ sender: UIButton) {
+        
+        var item: MyItem!
+        
+        if itemToEdit == nil {
+            item = MyItem(context: context)
+        } else {
+            item = itemToEdit
+        }
+        
+        
+        
+        if let title = titleField.text {
+            item.itemTitle = title
+        }
+        if let price = priceField.text {
+            item.itemPrice = (price as NSString).doubleValue
+        }
+        if let details = detilField.text {
+            item.detailsAbout = details
+        }
+        item.toStore = stores[storePicer.selectedRow(inComponent: 0)]
+        
+        ad.saveContext()
+        
+        _ = navigationController?.popViewController(animated: true)
+        
+    }
+    func loadItemData() {
+        if let item = itemToEdit {
+            titleField.text = item.itemTitle
+            priceField.text = "\(item.itemPrice)"
+            detilField.text = item.detailsAbout
+            
+            if let store = item.toStore {
+                var index = 0
+                repeat {
+                    
+                    let s = stores[index]
+                    if s.storeName == store.storeName {
+                        storePicer.selectRow(index, inComponent: 0, animated: false)
+                        
+                        break
+                    }
+                    index += 1
+                    
+                } while (index < stores.count)
+            }
+            
+            
+        }
+        
     }
 
 
