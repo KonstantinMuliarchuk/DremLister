@@ -33,6 +33,9 @@
                                     <segment title="Title"/>
                                 </segments>
                                 <color key="tintColor" red="0.3577778385" green="0.36753157380000001" blue="0.3595492274" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="segmentChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="H0W-Vx-9jW"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="156" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aM9-Rf-3rM">
                                 <rect key="frame" x="16" y="132" width="343" height="535"/>
@@ -160,7 +163,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imagePick" translatesAutoresizingMaskIntoConstraints="NO" id="M8b-tH-OkO">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imagePick" translatesAutoresizingMaskIntoConstraints="NO" id="M8b-tH-OkO">
                                 <rect key="frame" x="16" y="72" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="fmk-uz-UkP"/>
@@ -173,6 +176,9 @@
                                     <constraint firstAttribute="height" constant="30" id="bYd-Tc-1PS"/>
                                     <constraint firstAttribute="width" constant="30" id="kyN-Tz-m3T"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="addImage:" destination="get-bt-8mG" eventType="touchUpInside" id="CTs-Fe-7GC"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rvr-GP-iGr" customClass="CustomTextField" customModule="DreamLister" customModuleProvider="target">
                                 <rect key="frame" x="124" y="82" width="235" height="40"/>
@@ -263,6 +269,9 @@
                     <navigationItem key="navigationItem" title="Add/Edit" id="EEY-20-Xjo">
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="TUY-EA-jKt">
                             <color key="tintColor" red="0.91384106870000004" green="0.26118913290000001" blue="0.38305240870000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="deletePressed:" destination="get-bt-8mG" id="7tP-1a-Gwx"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -270,6 +279,7 @@
                         <outlet property="priceField" destination="5ya-G1-e2p" id="dAe-yR-dX2"/>
                         <outlet property="storePicer" destination="YBL-FG-ECz" id="p99-Xi-61X"/>
                         <outlet property="titleField" destination="rvr-GP-iGr" id="uJp-bh-gRL"/>
+                        <outlet property="tumbImage" destination="M8b-tH-OkO" id="lO5-a9-3hE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w6B-ef-4lD" userLabel="First Responder" sceneMemberID="firstResponder"/>

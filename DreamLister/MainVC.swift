@@ -21,15 +21,11 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         tableView.delegate = self
         tableView.dataSource = self
         
-        generateTestData()
+        //generateTestData()
         attemptFetch()
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let sections = controller.sections {
@@ -86,7 +82,24 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         
         let fetchRequest: NSFetchRequest<MyItem> = MyItem.fetchRequest()
         let dateSort = NSSortDescriptor(key: "itemCreated", ascending: false)
-        fetchRequest.sortDescriptors = [dateSort]
+        
+        let priceSort = NSSortDescriptor(key: "itemPrice", ascending: true)
+        let titleSort = NSSortDescriptor(key: "itemTitle", ascending: true)
+        
+        if segment.selectedSegmentIndex == 0 {
+            
+            fetchRequest.sortDescriptors = [dateSort]
+            
+        } else if segment.selectedSegmentIndex == 1 {
+            
+            fetchRequest.sortDescriptors = [priceSort]
+            
+        } else if segment.selectedSegmentIndex == 2 {
+            
+            fetchRequest.sortDescriptors = [titleSort]
+        }
+        
+        
         
         let controler = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context , sectionNameKeyPath: nil , cacheName: nil)
         
@@ -102,6 +115,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         }
         
     }
+    
+    @IBAction func segmentChange(_ sender: UISegmentedControl) {
+        
+        attemptFetch()
+        tableView.reloadData()
+    }
+    
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         
