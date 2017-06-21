@@ -15,6 +15,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
     @IBOutlet weak var segment: UISegmentedControl!
     
     var controller : NSFetchedResultsController <MyItem>!
+    var controller2: NSFetchedResultsController<MyItemType>!
+    var type: MyItemType!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +88,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         let priceSort = NSSortDescriptor(key: "itemPrice", ascending: true)
         let titleSort = NSSortDescriptor(key: "itemTitle", ascending: true)
         
+        let typeSort = NSSortDescriptor(key: "toItemType.itemType", ascending: true)
+        
         if segment.selectedSegmentIndex == 0 {
             
             fetchRequest.sortDescriptors = [dateSort]
@@ -97,6 +101,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         } else if segment.selectedSegmentIndex == 2 {
             
             fetchRequest.sortDescriptors = [titleSort]
+        } else if segment.selectedSegmentIndex == 3 {
+            fetchRequest.sortDescriptors = [typeSort]
         }
         
         
@@ -113,6 +119,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
             let error = error as NSError
             print("\(error)")
         }
+        
         
     }
     
@@ -168,20 +175,26 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
     
     func generateTestData() {
         let item = MyItem(context: context)
+        let type = MyItemType(context: context)
         item.itemTitle = "MacBook Pro"
         item.itemPrice = 1800
         item.detailsAbout = "I can't wait untill September to buy this wonderfull thing"
+        type.itemType = "Computer"
     
         let item2 = MyItem(context: context)
+        let type2 = MyItemType(context: context)
         item2.itemTitle = "Bose Headphones"
         item2.itemPrice = 300
         item2.detailsAbout = "But man < its so nice to be able to block out everyone with noise canceling tech"
+        type2.itemType = "Electronics"
     
     
         let item3 = MyItem(context: context)
+        let type3 = MyItemType(context: context)
         item3.itemTitle = "Tesla Model S"
         item3.itemPrice = 110000
         item3.detailsAbout = "Oh man its a beutiful car and one day i will own it"
+        type3.itemType = "Car"
         ad.saveContext()
         
     }

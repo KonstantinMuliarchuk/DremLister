@@ -16,6 +16,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
     @IBOutlet weak var priceField: CustomTextField!
     @IBOutlet weak var detilField: CustomTextField!
     @IBOutlet weak var tumbImage: UIImageView!
+    @IBOutlet weak var typeField: CustomTextField!
     
     var stores = [MyStore]()
     var itemToEdit: MyItem?
@@ -86,6 +87,9 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         let picture = MyImage(context: context)
         picture.imageToItem = tumbImage.image
         
+        let typeOfItem = MyItemType(context: context)
+        typeOfItem.itemType = typeField.text
+        
         
         if itemToEdit == nil {
             item = MyItem(context: context)
@@ -93,6 +97,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
             item = itemToEdit
         }
         item.toImage = picture
+        item.toItemType = typeOfItem
         
         
         if let title = titleField.text {
@@ -104,6 +109,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         if let details = detilField.text {
             item.detailsAbout = details
         }
+        
         item.toStore = stores[storePicer.selectedRow(inComponent: 0)]
         
         ad.saveContext()
@@ -116,6 +122,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
             titleField.text = item.itemTitle
             priceField.text = "\(item.itemPrice)"
             detilField.text = item.detailsAbout
+            typeField.text = item.toItemType?.itemType
             tumbImage.image = item.toImage?.imageToItem as? UIImage
             
             if let store = item.toStore {
